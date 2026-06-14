@@ -212,8 +212,17 @@
         }
         /* [반응형] */
         @media (max-width: 900px) {
-            .page-wrapper { flex-direction: column; }
-            .sidebar { position: relative; width: 100%; height: auto; }
+            .page-wrapper { 
+                flex-direction: column; 
+            }
+            
+            .sidebar { 
+                position: relative; /* fixed/sticky 해제 */
+                top: 0; 
+                width: 100%; 
+                height: auto; /* 내용 길이에 맞춰 자동 조절 */
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
@@ -268,10 +277,11 @@
 <div class="card">
 <img alt="이미지 1" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0000.png"/>
 <p>이 공략은 로스트아크 홈페이지 <a href="https://lostark.game.onstove.com/GameGuide" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 공식 가이드</a> 와 인게임 가이드의 리소스를 활용하여 작성하였습니다.</p>
+<p>🖥️ 본 가이드는 데스크탑(PC) 환경에 최적화되어 제작되었습니다.</p>
 <p>본 가이드의 문장 및 문법 검토, 레이아웃 작성은 제미나이(Gemini)의 도움을 받았습니다.</p>
 <p>최종 수정일 2026. 06. 14</p>
 </div>
-<h1 class="main-title" id="section0">0. 점핑권 / 익스프레스 가이드</h1>
+<h1 class="main-title" id="section0">0. 점핑권 / 익스프레스 가이드 (수정 예정)</h1>
 <p>로아온 발표 이후 나오는 내용과 업데이트 이후 나오는 내용을 반영해서 작성할 예정입니다.</p>
 <p>아래 적힌 내용은 2025 윈터 쇼케이스 때 작성한 내용으로 2026 썸머 로아온 발표 이후 수정될 예정입니다.</p>
 <div class="card">
