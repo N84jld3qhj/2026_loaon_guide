@@ -65,7 +65,61 @@
             }
 
                 /* [레이아웃] */
+        /* 목차 스타일 */
+        .toc-item {
+    color: #475569;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+    display: block;
+    padding: 5px 5px 5px 10px; /* 여기서 고정된 패딩을 줍니다 */
+}
 
+/* 호버 시 색상만 변경 (padding은 건드리지 않음) */
+.toc-item:hover {
+    color: #2563eb;
+}
+        .toc-box {
+            /* 1. 기본 박스 스타일 */
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0; /* 은은한 회색 테두리 */
+            border-radius: 12px;       /* 둥근 모서리 */
+            padding: 20px;             /* 내부 여백 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* 아주 연한 그림자 */
+            min-width: 200px; /* 너무 좁아지지 않게 최소 너비 유지 */
+            max-width: 350px; /* 너무 커지지 않게 최대 너비 제한 (선택 사항) */
+        }
+
+        .toc-box h3 {
+            margin: 0 0 15px 0 !important;
+            font-size: 1.1rem;
+            color: #1e293b;
+            border-bottom: 2px solid #f1f5f9; /* 제목 아래 구분선 */
+            padding-bottom: 10px;
+        }
+
+        .toc-box ul {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .toc-box a {
+            /* 3. 텍스트가 강제로 줄바꿈되지 않게 설정 */
+            white-space: nowrap;
+            text-decoration: none;
+            color: #475569;
+            padding: 8px 12px 8px 20px;
+            display: block;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            transition: none; /* 애니메이션 제거 */
+        }
+
+        /* 활성화 상태 (배경색 변경) */
+        .toc-box a.active {
+            background-color: #e2e8f0 !important;
+            color: #011b25 !important;
+            font-weight: bold !important;
+        }
         .progress-bar {
             position: fixed;
             top: 0;
@@ -97,7 +151,7 @@
         .toggle-btn {
             background: #011b25; color: white; border: none; padding: 12px; width: 100%; cursor: pointer; border-radius: 8px; margin-bottom: 10px; font-weight: bold;
         }
-                .toc-box { background: white; border: 1px solid #e0e0e0; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+
         /* 맨 위로 가기 버튼 */
         #topBtn {
             position: fixed; bottom: 20px; right: 20px; background: #011b25; color: white;
@@ -173,8 +227,6 @@
             font-weight: 500;
         }
 
-        a:hover { text-decoration: underline; color: #7dd3fc; }
-
         .image-placeholder {
             background: linear-gradient(45deg, #1e293b, #273549);
             border: 2px dashed #475569;
@@ -224,6 +276,7 @@
                 margin-bottom: 20px;
             }
         }
+        
     </style>
 </head>
 <body>
@@ -233,39 +286,38 @@
 <div class="page-wrapper">
     <!-- 사이드바 -->
     <nav class="sidebar">
-        <button class="toggle-btn" onclick="toggleToc()">목차 접기/펴기</button>
         <div id="toc-content" class="toc-box">
             <h3 style="margin-bottom: 15px;">목차</h3>
             <ul style="list-style: none;">
 
 <li style="margin-bottom: 10px;">
-<a href="#section0" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">0. 점핑권 / 익스프레스 가이드</a>
+<a href="#section0" class="toc-item">0. 점핑권 / 익스프레스 가이드</a>
 <li style="margin-bottom: 10px;">
-<a href="#section1" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">1. 공식 게임 가이드</a>
+<a href="#section1" class="toc-item">1. 공식 게임 가이드</a>
 </li>
 <li style="margin-bottom: 10px;">
-<a href="#section2" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">2. 인게임 설정</a>
+<a href="#section2" class="toc-item">2. 인게임 설정</a>
 </li>
 <li style="margin-bottom: 10px;">
-    <a href="#section3" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">3. 일일 콘텐츠</a>
+<a href="#section3" class="toc-item">3. 일일 콘텐츠</a>
 </li>
 <li style="margin-bottom: 10px;">
-    <a href="#section4" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">4. 주간 콘텐츠</a>
+    <a href="#section4" class="toc-item">4. 주간 콘텐츠</a>
 </li>
 <li style="margin-bottom: 10px;">
-    <a href="#section5" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">5. 캘린더 콘텐츠</a>
+    <a href="#section5" class="toc-item">5. 캘린더 콘텐츠</a>
 </li>
 <li style="margin-bottom: 10px;">
-    <a href="#section6" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">6. 골드 수급처</a>
+    <a href="#section6" class="toc-item">6. 골드 수급처</a>
 </li>
 <li style="margin-bottom: 10px;">
-<a href="#section7" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">7. 스펙업</a>
+<a href="#section7" class="toc-item">7. 스펙업</a>
 </li>
 <li style="margin-bottom: 10px;">
-<a href="#section8" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">8. 내실</a>
+<a href="#section8" class="toc-item">8. 내실</a>
 </li>
 <li style="margin-bottom: 10px;">
-<a href="#section9" onmouseout="this.style.color='#475569'; this.style.paddingLeft='0px'" onmouseover="this.style.color='#2563eb'; this.style.paddingLeft='10px'" style="color: #475569; text-decoration: none; font-weight: 500; transition: 0.3s; display: block; padding: 5px;">9. 외부 사이트</a>
+<a href="#section9" class="toc-item">9. 외부 사이트</a>
 </li>
             </ul>
         </div>
@@ -393,7 +445,7 @@
 <img alt="이미지 33" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0033.png"/>
 <p>전선과 가토 중에는 낮은 확률로 편린을 획득할 수 있습니다.</p>
 <p>편린에서는 실링, 골드, 전설 카드, 젬 등의 보상을 얻을 수 있습니다. 레벨에 따라 보상이 증가합니다.</p>
-<p>골드 편린의 경우 최대 20만골드 까지 나오기 때문에 일일 숙제는 꾸준히 돌아주시는게 좋습니다.</p>
+<p>골드 편린의 경우 최대 30만골드 까지 나오기 때문에 일일 숙제는 꾸준히 돌아주시는게 좋습니다.</p>
 <h2 class="sub-title">휴식 보너스</h2>
 <img alt="이미지 34" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0034.png"/>
 <p>ⓘ 휴식 보너스란?</p>
@@ -685,6 +737,14 @@
 <h3 class="section-header">재련 재료 수급처</h3>
 <img alt="이미지 71" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0071.png"/>
 <p>대부분의 PVE 컨텐츠에서 획득이 가능합니다. </p>
+<h3 class="section-header">효율적인 재련 방법과 순서</h3>
+<img alt="이미지 173" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0173.png"/>
+<p>로스트아크에는 거래 가능한 재료와 귀속 재료가 나뉘어져있고 거래 가능 재료의 가격이 계속 변하기 때문에 효율적인 재련 순서나 방법이 매번 바뀌게 됩니다.</p>
+<p>보조 재료인 숨결이나 책을 사용하는 것이 이득일 때도 있고 오히려 손해인 경우도 있습니다.</p>
+<p>일반 재련보다 상급 재련을 먼저하는게 목표레벨 달성이 쉬운 구간이 있고 반대로 상급 재련이 일반 재련보다 효율적인 구간도 있습니다.</p>
+<p>예를들어 위의 사진은 효율적인 재련 순서를 알려주는 외부 사이트인데 방어구 재련 순서를 보시면 일반재련 12강 > 상급 재련 20 > 일반 재련 19강 > 상급 재련 40 순으로 효율이 좋다고 나와있습니다.</p>
+<p>매번 재련 효율이 다르기 때문에 효율적인 재련 방법을 찾아서 재련을 하는게 좋은데 외부 사이트들을 사용하면 쉽게 찾을 수 있습니다.</p>
+<p><a href="#재련 정보" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 재련 정보 사이트</a> 재련 정보를 얻을 수 있는 외부 사이트 모음입니다. 사이트 참고 하셔서 효율적인 재련 순서와 방법을 사용하시면 되겠습니다.</p>
 <h3 class="section-header">싱글 상점 주간 교환</h3>
 <img alt="이미지 72" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0072.png"/>
 <p>싱글 상점에서 클리어 메달을 사용해 다양한 재련 재료를 구매할 수 있습니다.</p>
@@ -709,6 +769,8 @@
 <p>상급 재련은 확률에 의해 성공 / 대성공 / 대성공x2 의 결과를 얻을 수 있는데 보조 재료와 재봉술/야금술을 사용해 대성공/대성공x2 의 확률을 올릴 수 있습니다.</p>
 <img alt="이미지 78" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0078.png"/>
 <p>상급 재련을 6번 진행하면 선조의 가호를 받을 수 있는데 이때 대성공x2가 나오면 선조의 가호 효과도 늘어나기 때문에 가능하다면 선조의 가호 턴에는 추가 재료를 모두 넣는게 좋습니다.</p>
+<h3 class="section-header">상급 재련 순서</h3>
+<p>일반 재련에서도 설명을 했지만 재련과 상급 재련은 효율이 바뀌는 구간이 존재합니다. 물론 최종적으로는 둘 다 하는게 맞지만 저레벨 구간에서는 효율이 더 좋은 방법을 먼저 사용하는게 좋기 때문에 재련에서 설명한 것처럼 외부 사이트를 활용해 효율적인 순서로 재련을 하시는게 좋습니다. </p>
 </div>
 <div class="card">
 <h2 class="sub-title">각인</h2>
@@ -1216,7 +1278,7 @@
 <p>위에 적은곳 말고도 다른 사이트들도 많습니다. UI 맘에 드는 사이트 골라서 사용하시면 됩니다.</p>
 </div>
 <div class="card">
-<h2 class="sub-title">재련 정보</h2>
+<h2 id="재련 정보" class="sub-title">재련 정보</h2>
 <p></p>
 <p>재련 비용이나 효율적인 재련 순서등을 알려주는 사이트들입니다.</p>
 <p><a href="https://loa.icepeng.com/" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ LoaCalc</a> 아이스펭으로 유명한 사이트입니다. 본인이 가진 귀속 재료 입력하고 원하는 재련 단계 입력하면 평균 비용과 장기백 비용을 알려줍니다.</p>
@@ -1249,11 +1311,11 @@
 <div class="card">
 <h2 class="sub-title">아크 그리드</h2>
 <p></p>
-<p><a href="https://airplaner.github.io/lostark-arkgrid-gem-locator-v2/" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 아크 그리드 전투력 최적화</a>아크 그리드 관련 최적화 사이트입니다. 화면 인식 방식으로 젬을 등록한 후 자동으로 전투력이 최대가 되는 젬 세팅을 추천해줍니다.</p>
+<p><a href="https://airplaner.github.io/lostark-arkgrid-gem-locator-v2/" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 아크 그리드 전투력 최적화</a> 아크 그리드 관련 최적화 사이트입니다. 화면 인식 방식으로 젬을 등록한 후 자동으로 전투력이 최대가 되는 젬 세팅을 추천해줍니다.</p>
 <img alt="이미지 185" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0185.png"/>
-<p><a href="https://sunnypop424.github.io/#/core/optimizer" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 젬 장착 헬퍼</a>마찬가지로 젬 세팅 추천 도구 입니다. </p>
+<p><a href="https://sunnypop424.github.io/#/core/optimizer" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 젬 장착 헬퍼</a> 마찬가지로 젬 세팅 추천 도구 입니다. </p>
 <img alt="이미지 186" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0186.png"/>
-<p><a href="https://loatto.kr/gempago" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 로아또 화면 인식 젬파고</a>화면 인식 방식으로 젬 가공을 도와주는 사이트입니다.</p>
+<p><a href="https://loatto.kr/gempago" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 로아또 화면 인식 젬파고</a> 화면 인식 방식으로 젬 가공을 도와주는 사이트입니다.</p>
 <img alt="이미지 187" class="full-size" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0187.png"/>
 </div>
 <div class="card">
@@ -1288,12 +1350,7 @@
 </div>
 </div>
 <button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">▲ 맨 위로</button>
-<script>
-    function toggleToc() {
-        const content = document.getElementById('toc-content');
-        content.style.display = (content.style.display === 'none') ? 'block' : 'none';
-    }
-</script>
+
 <div class="progress-bar" id="progressBar"></div>
 <script>
     window.onscroll = function() {
@@ -1302,6 +1359,36 @@
         let scrolled = (winScroll / height) * 100;
         document.getElementById("progressBar").style.width = scrolled + "%";
     };
+</script>
+<script>
+    const navLinks = document.querySelectorAll('.toc-box a');
+    // 수정: .main-title 클래스를 가진 요소들만 타겟으로 지정
+    const sections = document.querySelectorAll('.main-title');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+
+        // 1. 현재 화면 위치 계산
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 150; 
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        // 2. 페이지 끝 도달 시 마지막 섹션 강제 고정
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+            current = sections[sections.length - 1].getAttribute('id');
+        }
+
+        // 3. 하이라이트 적용
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (current && link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
 </script>
 </body>
 </html>
