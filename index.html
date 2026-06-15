@@ -1390,5 +1390,30 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // .toc-box 안에 있는 모든 링크를 선택
+        const tocLinks = document.querySelectorAll('.toc-box a');
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 1. URL이 바뀌고 브라우저가 강제 이동하는 기본 동작 차단
+                e.preventDefault();
+
+                // 2. 링크의 href 속성에서 id를 가져옴 (예: #section0 -> section0)
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                // 3. 해당 위치로 부드럽게 스크롤
+                if (targetElement) {
+                    targetElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
