@@ -404,19 +404,24 @@
         }
 
                 /* [반응형] */
-                @media (max-width: 900px) {
-                    .page-wrapper { 
-                        flex-direction: column; 
-                    }
-                    
-                    .sidebar { 
-                        position: relative; /* fixed/sticky 해제 */
-                        top: 0; 
-                        width: 100%; 
-                        height: auto; /* 내용 길이에 맞춰 자동 조절 */
-                        margin-bottom: 20px;
-                    }
-                }
+/* 화면 폭이 900px 이하인 모바일/태블릿 환경에서만 적용 */
+@media (max-width: 900px) {
+    /* 1. 사이드바(목차) 영역을 완전히 숨김 */
+    .sidebar {
+        display: none !important;
+    }
+    
+    /* 2. 본문이 차지하는 불필요한 바깥 여백(여백 때문에 가로 스크롤 유발 방지) 초기화 */
+    body {
+        margin: 10px !important; /* 모바일 전용 슬림한 여백 */
+    }
+
+    /* 3. 본문 컨테이너가 화면 너비를 초과하지 않도록 제한 */
+    .page-wrapper, .main-content, .section-container, .card {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
     </style>
 </head>
 
@@ -468,6 +473,7 @@
         <main class="main-content">
 
             <div class="section-container">
+                <h1 class="main-title" id="intro">가이드 소개</h1>
                 <div class="card">
                     <img alt="이미지 1" class="full-size lazy-scroll-img" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0000.png" />
                     <p>이 공략은 로스트아크 홈페이지 <a href="https://lostark.game.onstove.com/GameGuide" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 공식 가이드</a> 와 인게임 가이드의 리소스를 활용하여 작성하였습니다.</p>
@@ -1819,55 +1825,58 @@
     });
 </script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 본문 내의 모든 대메뉴(h1)를 찾습니다.
-            const mainTitles = document.querySelectorAll('main.main-content h1.main-title');
+    document.addEventListener('DOMContentLoaded', () => {
+        // 본문 내의 모든 대메뉴(h1)를 찾습니다.
+        const mainTitles = document.querySelectorAll('main.main-content h1.main-title');
+        
+        mainTitles.forEach(title => {
+            // 1. 타이틀과 우측 버튼을 묶어줄 wrapper(div) 생성
+            const wrapper = document.createElement('div');
+            wrapper.className = 'main-title-wrapper';
             
-            mainTitles.forEach(title => {
-                // 1. 타이틀과 우측 버튼을 묶어줄 wrapper(div) 생성
-                const wrapper = document.createElement('div');
-                wrapper.className = 'main-title-wrapper';
+            // 2. 우측 버튼 생성 (기본 상태가 '펴기'이므로 '접기 ▲'로 시작)
+            const toggleBtn = document.createElement('div');
+            toggleBtn.className = 'toggle-layout-btn expanded-state';
+            toggleBtn.innerText = '접기 '; 
+            
+            // 3. 구조 배치 변경 (h1을 wrapper 안으로 넣고 버튼과 정렬)
+            title.parentNode.insertBefore(wrapper, title);
+            wrapper.appendChild(title);
+            wrapper.appendChild(toggleBtn);
+            
+            // 4. [수정 핵심] 해당 섹션(container) 안에서 wrapper(제목)를 제외한 
+            // 모든 자식 요소들(p, div.card, img 등)을 전부 숨김 대상으로 지정합니다.
+            const container = wrapper.parentNode;
+            
+            // 5. 버튼 클릭 시 온/오프 이벤트
+            toggleBtn.addEventListener('click', () => {
+                const isFolded = toggleBtn.classList.contains('folded-state');
                 
-                // 2. 우측 버튼 생성 (기본 상태가 '펴기'이므로 '접기 ▲'로 시작)
-                const toggleBtn = document.createElement('div');
-                toggleBtn.className = 'toggle-layout-btn expanded-state';
-                toggleBtn.innerText = '접기 '; 
-                
-                // 3. 기존 구조 배치 변경 (h1을 wrapper 안으로 넣고 버튼과 정렬)
-                title.parentNode.insertBefore(wrapper, title);
-                wrapper.appendChild(title);
-                wrapper.appendChild(toggleBtn);
-                
-                // 4. 같은 부모 안의 모든 카드(.card) 요소를 추적
-                const container = wrapper.parentNode;
-                const targetCards = container.querySelectorAll('.card');
-                
-                // 5. 버튼 클릭 시 온/오프 이벤트
-                toggleBtn.addEventListener('click', () => {
-                    const isFolded = toggleBtn.classList.contains('folded-state');
-                    
-                    targetCards.forEach(card => {
+                // container 내부의 모든 자식 요소를 돌면서 wrapper(제목줄)만 빼고 전부 토글
+                Array.from(container.children).forEach(child => {
+                    if (child !== wrapper) {
                         if (isFolded) {
-                            card.classList.remove('content-folded'); // 보이기
+                            child.classList.remove('content-folded'); // 보이기
                         } else {
-                            card.classList.add('content-folded');    // 숨기기
+                            child.classList.add('content-folded');    // 숨기기
                         }
-                    });
-                    
-                    // 버튼 상태 클래스 및 텍스트 교체
-                    if (isFolded) {
-                        toggleBtn.classList.remove('folded-state');
-                        toggleBtn.classList.add('expanded-state');
-                        toggleBtn.innerText = '접기 ';
-                    } else {
-                        toggleBtn.classList.remove('expanded-state');
-                        toggleBtn.classList.add('folded-state');
-                        toggleBtn.innerText = '펴기 ';
                     }
                 });
+                
+                // 버튼 상태 클래스 및 텍스트 교체
+                if (isFolded) {
+                    toggleBtn.classList.remove('folded-state');
+                    toggleBtn.classList.add('expanded-state');
+                    toggleBtn.innerText = '접기 ';
+                } else {
+                    toggleBtn.classList.remove('expanded-state');
+                    toggleBtn.classList.add('folded-state');
+                    toggleBtn.innerText = '펴기 ';
+                }
             });
         });
-    </script>
+    });
+</script>
     <div class="fixed-bottom-ui">
         <div class="update-date">최종 수정일: 2026. 06. 16</div>
         <button id="topBtn" onclick="window.scrollTo(0, 0);">맨 위로</button>
