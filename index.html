@@ -60,37 +60,58 @@
                 letter-spacing: -0.02em; /* 한국어는 살짝 좁히면 더 예쁩니다 */
                 color: #334155;          /* 완전 검정(#000)보다 눈이 훨씬 편함 */
             }
-        .fixed-bottom-ui {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px; /* 수정일과 버튼 사이 간격 */
-            z-index: 999;
-        }
+        /* 1. 컨테이너 고정 및 리스트 초기화 */
+.fixed-bottom-ui {
+    position: fixed !important;
+    /* 화면 세로 중앙 설정 */
+    top: 50% !important;
+    right: 20px !important;
+    /* 자신의 높이만큼 위로 올려 정확한 중앙 정렬 */
+    transform: translateY(-50%) !important;
+    z-index: 9999 !important;
+}
 
-        /* 기존 버튼 스타일에서 position 관련 속성 삭제 */
-        #topBtn {
-            /* position: fixed; bottom: 20px; right: 20px; 삭제 */
-            background: #011b25; color: white;
-            padding: 10px 15px; border-radius: 4px; border: none; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s;
-        }
-        #topBtn:hover { transform: translateY(-5px); }
+.fixed-bottom-ui ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        /* 수정일 스타일 수정 */
-        .update-date {
-            background: rgba(255, 255, 255, 0.9);
-            color: #334155;
-            padding: 8px 15px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            white-space: nowrap; /* 글자가 줄바꿈 되지 않게 */
-        }
+/* 2. 아이템 사이 간격 제거 및 텍스트 기준 너비 설정 */
+.fixed-bottom-ui li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 3. 버튼 및 텍스트 박스: 테두리 중심, 직각 스타일, 자동 너비 */
+.fixed-bottom-ui button, 
+.fixed-bottom-ui .update-date {
+    display: block;
+    width: 100%;             /* 부모 li 너비에 맞춤 */
+    min-width: 120px;        /* 너무 좁아지지 않게 최소 너비 설정 */
+    padding: 10px 15px;      /* 텍스트 좌우 여백 확보 */
+    background-color: #ffffff; /* 색상 통일 */
+    border: 1px solid #e2e8f0; /* 테두리만 */
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 0;        /* 둥글기 제거 */
+}
+.fixed-bottom-ui .update-date {
+    cursor: default !important; /* 이 한 줄이 핵심입니다 */
+}
+
+/* 4. 위쪽 테두리와 아래쪽 테두리가 겹치지 않게 조절 */
+.fixed-bottom-ui li:not(:first-child) button,
+.fixed-bottom-ui li:not(:first-child) .update-date {
+    border-top: none;
+}
+
+
 
                 /* 목차 스타일 */
                 .toc-item {
@@ -234,8 +255,14 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* 그림자를 조금 연하게 하면 더 깔끔합니다 */
             color: #333333 !important;
         }
-        .section-container{
+        .section-container {
             background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 16px 24px 24px 24px; /* 상단(첫번째 값)을 24px에서 16px로 슬림하게 조절 */
+            margin-bottom: 35px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
         }
         p {
             margin-bottom: 12px;
@@ -339,17 +366,20 @@
         .main-title-wrapper {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* 제목은 왼쪽, 버튼은 오른쪽 끝 */
-            margin: 40px 0 20px 0;
-            border-bottom: 2px solid #e2e8f0; /* 깔끔한 밝은 회색 구분선 */
+            justify-content: space-between;
+            margin-top: 0 !important;     /* 💥 상단 여백을 강제로 0으로 만들어 뻥 뚫린 공백을 제거 */
+            margin-bottom: 20px;          /* 제목 아래 본문과의 간격만 유지 */
+            border-bottom: 2px solid #e2e8f0;
             padding-bottom: 12px;
         }
 
         /* 기존 h1의 마진과 하단 선이 겹치지 않게 초기화 */
         h1.main-title {
-            margin: 0 !important;
+            margin-top: 0 !important;      /* 상단 마진 제거 */
+            margin-bottom: 0 !important;   /* 하단 마진 제거 */
             border-bottom: none !important;
             padding-bottom: 0 !important;
+            line-height: 1.2;              /* 줄간격으로 인한 미세 여백 정돈 */
         }
 
         /* 밝은색 테마에 어울리는 깔끔하고 세련된 라운드 버튼 */
@@ -410,6 +440,11 @@
     .sidebar {
         display: none !important;
     }
+        .fixed-bottom-ui {
+        display: none !important;
+    }
+
+
     
     /* 2. 본문이 차지하는 불필요한 바깥 여백(여백 때문에 가로 스크롤 유발 방지) 초기화 */
     body {
@@ -1875,12 +1910,36 @@
                 }
             });
         });
+        document.getElementById('toggleAllBtn').addEventListener('click', function() {
+        const allToggleBtns = document.querySelectorAll('.toggle-layout-btn');
+        const isCurrentlyFolded = this.innerText === '전체 펴기';
+        
+        allToggleBtns.forEach(btn => {
+            // 각 섹션의 버튼이 현재 상태와 반대라면 클릭 이벤트를 강제로 발생시킴
+            const isBtnFolded = btn.classList.contains('folded-state');
+            if (isCurrentlyFolded ? isBtnFolded : !isBtnFolded) {
+                btn.click();
+            }
+        });
+        
+        // 전체 버튼 텍스트 토글
+        this.innerText = isCurrentlyFolded ? '전체 접기' : '전체 펴기';
+    });
     });
 </script>
-    <div class="fixed-bottom-ui">
-        <div class="update-date">최종 수정일: 2026. 06. 16</div>
-        <button id="topBtn" onclick="window.scrollTo(0, 0);">맨 위로</button>
-    </div>
+<div class="fixed-bottom-ui">
+    <ul>
+        <li>
+            <button id="toggleAllBtn">전체 접기</button>
+        </li>
+        <li>
+            <button id="topBtn" onclick="window.scrollTo(0, 0);">맨 위로</button>
+        </li>
+        <li>
+            <div class="update-date">최종 수정일: 2026. 06. 19</div>
+        </li>
+    </ul>
+</div>
 
 </body>
 
