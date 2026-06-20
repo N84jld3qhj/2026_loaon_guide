@@ -60,56 +60,56 @@
                 letter-spacing: -0.02em; /* 한국어는 살짝 좁히면 더 예쁩니다 */
                 color: #334155;          /* 완전 검정(#000)보다 눈이 훨씬 편함 */
             }
-        /* 1. 컨테이너 고정 및 리스트 초기화 */
-.fixed-bottom-ui {
-    position: fixed !important;
-    /* 화면 세로 중앙 설정 */
-    top: 50% !important;
-    right: 20px !important;
-    /* 자신의 높이만큼 위로 올려 정확한 중앙 정렬 */
-    transform: translateY(-50%) !important;
-    z-index: 9999 !important;
-}
+                /* 1. 컨테이너 고정 및 리스트 초기화 */
+        .fixed-bottom-ui {
+            position: fixed !important;
+            /* 화면 세로 중앙 설정 */
+            top: 50% !important;
+            right: 20px !important;
+            /* 자신의 높이만큼 위로 올려 정확한 중앙 정렬 */
+            transform: translateY(-50%) !important;
+            z-index: 9999 !important;
+        }
 
-.fixed-bottom-ui ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+        .fixed-bottom-ui ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-/* 2. 아이템 사이 간격 제거 및 텍스트 기준 너비 설정 */
-.fixed-bottom-ui li {
-    margin: 0 !important;
-    padding: 0 !important;
-}
+        /* 2. 아이템 사이 간격 제거 및 텍스트 기준 너비 설정 */
+        .fixed-bottom-ui li {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
 
-/* 3. 버튼 및 텍스트 박스: 테두리 중심, 직각 스타일, 자동 너비 */
-.fixed-bottom-ui button, 
-.fixed-bottom-ui .update-date {
-    display: block;
-    width: 100%;             /* 부모 li 너비에 맞춤 */
-    min-width: 120px;        /* 너무 좁아지지 않게 최소 너비 설정 */
-    padding: 10px 15px;      /* 텍스트 좌우 여백 확보 */
-    background-color: #ffffff; /* 색상 통일 */
-    border: 1px solid #e2e8f0; /* 테두리만 */
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #475569;
-    cursor: pointer;
-    text-align: center;
-    box-sizing: border-box;
-    border-radius: 0;        /* 둥글기 제거 */
-}
-.fixed-bottom-ui .update-date {
-    cursor: default !important; /* 이 한 줄이 핵심입니다 */
-}
+        /* 3. 버튼 및 텍스트 박스: 테두리 중심, 직각 스타일, 자동 너비 */
+        .fixed-bottom-ui button, 
+        .fixed-bottom-ui .update-date {
+            display: block;
+            width: 100%;             /* 부모 li 너비에 맞춤 */
+            min-width: 120px;        /* 너무 좁아지지 않게 최소 너비 설정 */
+            padding: 10px 15px;      /* 텍스트 좌우 여백 확보 */
+            background-color: #ffffff; /* 색상 통일 */
+            border: 1px solid #e2e8f0; /* 테두리만 */
+            margin: 0;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            border-radius: 0;        /* 둥글기 제거 */
+        }
+        .fixed-bottom-ui .update-date {
+            cursor: default !important; /* 이 한 줄이 핵심입니다 */
+        }
 
-/* 4. 위쪽 테두리와 아래쪽 테두리가 겹치지 않게 조절 */
-.fixed-bottom-ui li:not(:first-child) button,
-.fixed-bottom-ui li:not(:first-child) .update-date {
-    border-top: none;
-}
+        /* 4. 위쪽 테두리와 아래쪽 테두리가 겹치지 않게 조절 */
+        .fixed-bottom-ui li:not(:first-child) button,
+        .fixed-bottom-ui li:not(:first-child) .update-date {
+            border-top: none;
+        }
 
 
 
@@ -433,30 +433,30 @@
             display: none !important;
         }
 
-                /* [반응형] */
-/* 화면 폭이 900px 이하인 모바일/태블릿 환경에서만 적용 */
-@media (max-width: 900px) {
-    /* 1. 사이드바(목차) 영역을 완전히 숨김 */
-    .sidebar {
-        display: none !important;
-    }
-        .fixed-bottom-ui {
-        display: none !important;
-    }
+                        /* [반응형] */
+        /* 화면 폭이 900px 이하인 모바일/태블릿 환경에서만 적용 */
+        @media (max-width: 900px) {
+            /* 1. 사이드바(목차) 영역을 완전히 숨김 */
+            .sidebar {
+                display: none !important;
+            }
+                .fixed-bottom-ui {
+                display: none !important;
+            }
 
 
-    
-    /* 2. 본문이 차지하는 불필요한 바깥 여백(여백 때문에 가로 스크롤 유발 방지) 초기화 */
-    body {
-        margin: 10px !important; /* 모바일 전용 슬림한 여백 */
-    }
+            
+            /* 2. 본문이 차지하는 불필요한 바깥 여백(여백 때문에 가로 스크롤 유발 방지) 초기화 */
+            body {
+                margin: 10px !important; /* 모바일 전용 슬림한 여백 */
+            }
 
-    /* 3. 본문 컨테이너가 화면 너비를 초과하지 않도록 제한 */
-    .page-wrapper, .main-content, .section-container, .card {
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
-}
+            /* 3. 본문 컨테이너가 화면 너비를 초과하지 않도록 제한 */
+            .page-wrapper, .main-content, .section-container, .card {
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+        }
     </style>
 </head>
 
@@ -570,7 +570,7 @@
                     <h3 class="section-header">차원술사 전용 이벤트</h3>
                     <img alt="이미지 216" class="full-size lazy-scroll-img" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0216.png" />
                     <p>신규 직업 차원술사의 경우 모코코 베이스 캠프를 제외한 보상이 따로 존재합니다. 모코코 베이스 캠프 보상과 같은 보상을 받을 수 있는데 그것과 상관없이 모코코 베이스 캠프를 추가로 설정할 수도 있습니다.</p>
-                    <p>차원술사에 모코코 베이스 캠프를 지정하면 모코코 베이스 캠프 보상을 2번 받는게 되는건데 이렇게 되면 보석, 전설 코어, 카르마, 상급재련 재료 등이 중복으로 받게되어 쓸모가 없어집니다.</p>
+                    <p>차원술사에 모코코 베이스 캠프를 지정하면 모코코 베이스 캠프 보상을 2번 받게 되는건데 이렇게 되면 보석, 전설 코어, 카르마, 상급재련 재료 등이 중복으로 받게되어 쓸모가 없어집니다.</p>
                     <p>유물 코어 선택 상자가 6개가 되기 때문에 1캐릭터를 빠르게 유물 코어 졸업을 할 수는 있지만 다른 보상들이 뉴비/복귀 유저에게 큰 도움이 되기 때문에 가능하다면 차원 술사가 아닌 다른 캐릭터에 모코코 베이스 캠프를 지정하는걸 추천드립니다.</p>
                     <p>차원술사 2개를 키워서 보상을 나눠 받는것도 가능합니다만 차원술사 출시 전까지 보상을 받지 못한다는 문제가 있습니다.</p>
                 </div>
@@ -1755,6 +1755,7 @@
                 <div class="card">
                     <h2 id="아크 그리드" class="sub-title">아크 그리드</h2>
                     <p></p>
+                    <p>이번 로아온 업데이트로 젬 자동 장착 기능이 생기면서 외부 사이트를 통해 젬 장착 최적화를 할 필요가 없어졌습니다. 업데이트 전까지만 사용하시면 되겠습니다.</p>
                     <p><a href="https://aloa.gg/ko/arkgrid" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 알로아</a> 아크 그리드 관련 최적화 사이트입니다. 화면 인식 방식으로 젬을 등록한 후 자동으로 전투력이 최대가 되는 젬 세팅을 추천해줍니다.</p>
                     <img alt="이미지 202" class="full-size lazy-scroll-img" src="https://raw.githubusercontent.com/N84jld3qhj/2026_loaon_guide/main/images/0202.png" />
                     <p><a href="https://airplaner.github.io/lostark-arkgrid-gem-locator-v2/" style="color: #3b82f6; text-decoration: underline; font-weight: bold;" target="_blank">➡️ 아크 그리드 전투력 최적화</a>
@@ -1987,7 +1988,7 @@
                 <button id="topBtn" onclick="window.scrollTo(0, 0);">맨 위로</button>
             </li>
             <li>
-                <div class="update-date">최종 수정일: 2026. 06. 19</div>
+                <div class="update-date">최종 수정일: 2026. 06. 20</div>
             </li>
         </ul>
     </div>
