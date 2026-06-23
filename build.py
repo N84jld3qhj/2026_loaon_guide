@@ -38,15 +38,16 @@ DIST = ROOT / "dist"
 SITE_TITLE = "2026 썸머 로아온 뉴비/복귀 가이드"
 SECTIONS = [
     ("section0", "section0.html", "0. 모코코 베이스 캠프 가이드", "section0.html", "0. 모코코 베이스 캠프 가이드"),
-    ("section1", "section1.html", "1. 공식 게임 가이드", "section1.html", "1. 공식 게임 가이드"),
-    ("section2", "section2.html", "2. 인게임 설정", "section2.html", "2. 인게임 설정"),
-    ("section3", "section3.html", "3. 일일 콘텐츠", "section3.html", "3. 일일 콘텐츠"),
-    ("section4", "section4.html", "4. 주간 콘텐츠", "section4.html", "4. 주간 콘텐츠"),
-    ("section5", "section5.html", "5. 캘린더 콘텐츠", "section5.html", "5. 캘린더 콘텐츠"),
-    ("section6", "section6.html", "6. 골드 수급처", "section6.html", "6. 골드 수급처"),
-    ("section7", "section7.html", "7. 스펙업", "section7.html", "7. 스펙업"),
-    ("section8", "section8.html", "8. 내실", "section8.html", "8. 내실"),
-    ("section9", "section9.html", "9. 외부 사이트", "section9.html", "9. 외부 사이트"),
+    ("section1", "section1.html", "1. 과금 요소", "section1.html", "1. 과금 요소"),
+    ("section2", "section1.html", "2. 공식 게임 가이드", "section1.html", "2. 공식 게임 가이드"),
+    ("section3", "section2.html", "3. 인게임 설정", "section2.html", "3. 인게임 설정"),
+    ("section4", "section3.html", "4. 일일 콘텐츠", "section3.html", "4. 일일 콘텐츠"),
+    ("section5", "section4.html", "5. 주간 콘텐츠", "section4.html", "5. 주간 콘텐츠"),
+    ("section6", "section5.html", "6. 캘린더 콘텐츠", "section5.html", "6. 캘린더 콘텐츠"),
+    ("section7", "section6.html", "7. 골드 수급처", "section6.html", "7. 골드 수급처"),
+    ("section8", "section7.html", "8. 스펙업", "section7.html", "8. 스펙업"),
+    ("section9", "section8.html", "9. 내실", "section8.html", "9. 내실"),
+    ("section10", "section10.html", "10. 외부 사이트", "section10.html", "10. 외부 사이트"),
 ]
 LANDING_ID = "index"
 LANDING_FILE = "index.html"
