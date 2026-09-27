@@ -35,7 +35,7 @@ DIST = ROOT / "dist"
 
 # Top-level navigation / page table. Order = display order.
 # (page_id, output filename, short nav label, content fragment, <title>)
-SITE_TITLE = "2026 로아 뉴비/복귀 가이드"
+SITE_TITLE = "2026 로아온 윈터 뉴비/복귀 가이드"
 SECTIONS = [
     ("section0", "section0.html", "0. 뉴비용 게임 소개", "section0.md", "0. 뉴비용 게임 소개"),
     ("section1", "section1.html", "1. 과금 요소", "section1.md", "1. 과금 요소"),
@@ -234,7 +234,10 @@ SITE_CARD_BLOCK_RE = re.compile(
     r'^\s*:::\s*site-card\s*\n(.*?)^\s*:::\s*$',
     re.IGNORECASE | re.MULTILINE | re.DOTALL
 )
-
+SITE_CARD_GRID_BLOCK_RE = re.compile(
+    r'^\s*:::\s*site-card-grid\s*\n(.*?)^\s*:::\s*$',
+    re.IGNORECASE | re.MULTILINE | re.DOTALL
+)
 
 def render_site_card_block(m: re.Match) -> str:
     body = m.group(1)
@@ -261,36 +264,33 @@ def render_site_card_block(m: re.Match) -> str:
     if not title or not url:
         return m.group(0)
 
-    # === [수정 부분] image 경로 변환 로직 ===
-    # /images/sites/09.png 형태 또는 images/sites/09.png 형태 처리
+    # image 경로 정규화 (GitHub Pages URL 결합)
     if image:
-        # 맨 앞의 / 나 ./ 제거
         clean_image_path = re.sub(r'^\.?/*', '', image)
-        
-        # GitHub Pages 저장소 경로를 포함한 완전한 URL 생성
-        # (만약 도메인 없이 상대경로만 쓰려면 f"{clean_image_path}" 만 쓰셔도 됩니다)
         if clean_image_path.startswith("images/"):
             image = f"https://n84jld3qhj.github.io/2026_winter_loaon_guide/{clean_image_path}"
         elif not image.startswith("http"):
             image = f"https://n84jld3qhj.github.io/2026_winter_loaon_guide/images/{clean_image_path}"
-    # ====================================
 
     title = html_lib.escape(title)
     url = html_lib.escape(url, quote=True)
     desc = html_lib.escape(desc)
 
+    # === [수정] img 태그 및 div에 pointer-events: none; 주입 ===
+    # 이미지가 클릭 이벤트를 가로채지 않고, 부모 <a> 태그의 링크 이동이 동작하도록 합니다.
     if image:
         image_html = (
-            f'<div class="site-card-image">'
-            f'<img src="{html_lib.escape(image, quote=True)}" alt="">'
+            f'<div class="site-card-image" style="pointer-events: none;">'
+            f'<img src="{html_lib.escape(image, quote=True)}" alt="" style="pointer-events: none;">'
             f'</div>'
         )
     else:
         image_html = (
-            '<div class="site-card-image site-card-image-empty">'
+            '<div class="site-card-image site-card-image-empty" style="pointer-events: none;">'
             '↗'
             '</div>'
         )
+    # ========================================================
 
     try:
         domain = urlparse(values.get("url", "")).netloc
@@ -314,19 +314,79 @@ def render_site_card_block(m: re.Match) -> str:
 
 def convert_site_cards(text: str):
     cards = []
+    grids = []
 
+    # 먼저 개별 site-card를 토큰으로 치환
+    # 이렇게 해야 site-card-grid 안에 site-card가 들어가도
+    # 바깥 grid의 :::와 안쪽 card의 :::를 서로 혼동하지 않음.
     def replace_card(m):
         index = len(cards)
 
         # 실제 HTML은 Markdown 변환이 끝난 뒤 삽입
         cards.append(render_site_card_block(m))
 
-        # Markdown에서 일반 텍스트로 처리되지 않도록 임시 토큰 사용
         return f"\n\n<!--SITE_CARD_{index}-->\n\n"
 
     text = SITE_CARD_BLOCK_RE.sub(replace_card, text)
 
-    return text, cards
+    # site-card-grid 처리
+    def replace_grid(m):
+        body = m.group(1)
+
+        # columns: N
+        columns = 2
+
+        for line in body.splitlines():
+            line = line.strip()
+
+            if not line:
+                continue
+
+            column_match = re.match(
+                r'^columns\s*:\s*(\d+)\s*$',
+                line,
+                re.IGNORECASE
+            )
+
+            if column_match:
+                columns = int(column_match.group(1))
+                break
+
+        # 너무 큰 값이나 0 이하 값 방지
+        columns = max(1, min(columns, 6))
+
+        # grid 내부에 들어있는 site-card 토큰 찾기
+        card_indexes = [
+            int(index)
+            for index in re.findall(
+                r'<!--SITE_CARD_(\d+)-->',
+                body
+            )
+        ]
+
+        if not card_indexes:
+            return m.group(0)
+
+        # 실제 grid HTML 생성
+        card_html = "\n".join(
+            cards[index]
+            for index in card_indexes
+        )
+
+        grid_html = (
+            f'<div class="site-card-grid columns-{columns}">\n'
+            f'{card_html}\n'
+            f'</div>'
+        )
+
+        index = len(grids)
+        grids.append(grid_html)
+
+        return f"\n\n<!--SITE_CARD_GRID_{index}-->\n\n"
+
+    text = SITE_CARD_GRID_BLOCK_RE.sub(replace_grid, text)
+
+    return text, cards, grids
 
 def read(path: pathlib.Path) -> str:
     return path.read_text(encoding="utf-8")
@@ -364,7 +424,7 @@ def main() -> int:
         raw_text = read_fragment(frag, pid)
 
         # site-card를 임시 토큰으로 치환
-        raw_text, site_cards = convert_site_cards(raw_text)
+        raw_text, site_cards, site_card_grids = convert_site_cards(raw_text)
 
         # Markdown 변환
         html = md_converter.convert(raw_text)
@@ -382,6 +442,20 @@ def main() -> int:
             html = html.replace(
                 token,
                 card_html
+            )
+
+        # Markdown 변환이 끝난 후 실제 grid HTML 삽입
+        for i, grid_html in enumerate(site_card_grids):
+            token = f'<!--SITE_CARD_GRID_{i}-->'
+
+            html = html.replace(
+                f'<p>{token}</p>',
+                grid_html
+            )
+
+            html = html.replace(
+                token,
+                grid_html
             )
 
     # === [추가] H2 기준으로 자동으로 div.card 감싸기 ===
